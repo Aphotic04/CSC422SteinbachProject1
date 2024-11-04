@@ -13,21 +13,30 @@ public class CSC422SteinbachProject1 {
         String name;
         int age;
         while(true) {
-            Pet pet = new Pet();
-            System.out.println("add pet (name, age):");
-            
-            input = scnr.nextLine();
-            String[] inputArray = input.split(" ");
-            name = inputArray[0];
-            if (!name.equalsIgnoreCase("done")) {
-                age = Integer.parseInt(inputArray[1]);
-                pet.setName(name);
-                pet.setAge(age);
-                pets.add(pet);
+            try {
+                Pet pet = new Pet();
+                System.out.println("add pet (name, age):");
+
+                input = scnr.nextLine();
+                String[] inputArray = input.split(" ");
+                name = inputArray[0];
+                if (!name.equalsIgnoreCase("done")) {
+                    age = Integer.parseInt(inputArray[1]);
+                    pet.setName(name);
+                    pet.setAge(age);
+                    pets.add(pet);
+                }
+                else {
+                    break;
+                }
             }
-            else {
-                break;
+            catch(NumberFormatException e) {
+                System.out.println(e);
             }
+            catch(IndexOutOfBoundsException e) {
+            System.out.println(e);
+            }
+           
         }
     }
     
@@ -39,7 +48,7 @@ public class CSC422SteinbachProject1 {
         Pet current;
         for(int i = 0; i < pets.size(); i++) {
             current = pets.get(i);
-            if (current.getName().equalsIgnoreCase(input)) {
+            if (current.getName().equals(input)) {
                 petsNames.add(current);
             }
         }
@@ -97,8 +106,9 @@ public class CSC422SteinbachProject1 {
         catch(IndexOutOfBoundsException e) {
             System.out.println(e);
         }
-       
-        
+        catch(NumberFormatException e) {
+                System.out.println(e);
+        }
     }
     
     static void removePet(ArrayList<Pet> pets, Scanner scnr) {
