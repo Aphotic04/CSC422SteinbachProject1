@@ -28,10 +28,7 @@ public class CSC422SteinbachProject1 {
             else {
                 break;
             }
-            
         }
-        
-        
     }
     
     static void searchName(ArrayList<Pet> pets, Scanner scnr) {
@@ -66,6 +63,61 @@ public class CSC422SteinbachProject1 {
         }
         catch(InputMismatchException e) {
             System.out.println(e);
+            scnr.next();
+        }
+    }
+    
+    static void updatePet(ArrayList<Pet> pets, Scanner scnr) {
+        try {
+            Pet petUpdate;
+            String input;
+            String name;
+            int age;
+            
+            printPets(pets);
+            System.out.println("Enter the pet ID you want to update: ");
+            petUpdate = pets.get(scnr.nextInt());
+            System.out.println("Enter new name and new age: ");
+            
+            scnr.nextLine();
+            input = scnr.nextLine();
+            String[] inputArray = input.split(" ");
+            name = inputArray[0];
+            age = Integer.parseInt(inputArray[1]);
+            
+            System.out.print(petUpdate + " changed to ");
+            petUpdate.setName(name);
+            petUpdate.setAge(age);
+            System.out.println(petUpdate);
+        }
+        catch(InputMismatchException e) {
+            System.out.println(e);
+            scnr.next();
+        }
+        catch(IndexOutOfBoundsException e) {
+            System.out.println(e);
+        }
+       
+        
+    }
+    
+    static void removePet(ArrayList<Pet> pets, Scanner scnr) {
+        try {
+            Pet petRemove;
+            int input;
+            printPets(pets);
+            System.out.println("Enter the pet ID you want to remove: ");
+            input = scnr.nextInt();
+            petRemove = pets.get(input);
+            pets.remove(input);
+            System.out.println(petRemove + " is removed");
+        }
+        catch(InputMismatchException e) {
+            System.out.println(e);
+            scnr.next();
+        }
+        catch(IndexOutOfBoundsException e) {
+            System.out.println(e);
         }
     }
     
@@ -83,22 +135,27 @@ public class CSC422SteinbachProject1 {
         ArrayList<Pet> pets = new ArrayList<>();
         Scanner scnr = new Scanner(System.in);
         int input = 0;
-        while (input != 5) {
+        while (input != 7) {
             System.out.println("""
                            Pet Database Program
                            1) View all pets
                            2) Add more Pet
-                           3) Search pets by name
-                           4) Search pets by age
-                           5) Exit
+                           3) Update existing pet
+                           4) Remove existing pet
+                           5) Search pets by name
+                           6) Search pets by age
+                           7) Exit
                            """);
             try {
                 input = scnr.nextInt();
                 switch(input) {
                     case(1) -> printPets(pets);
                     case(2) -> addPets(pets, scnr);
-                    case(3) -> searchName(pets, scnr);
-                    case(4) -> searchAge(pets, scnr);
+                    case(3) -> updatePet(pets, scnr);
+                    case(4) -> removePet(pets, scnr);
+                    case(5) -> searchName(pets, scnr);
+                    case(6) -> searchAge(pets, scnr);
+                    
                 }
             }
             catch(InputMismatchException e) {
