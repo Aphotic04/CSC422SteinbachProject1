@@ -6,9 +6,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CSC422SteinbachProject1 {
-    static ArrayList<Pet> pets = new ArrayList<>();
 
-    static void addPets(Scanner scnr) {
+    static void addPets(ArrayList<Pet> pets, Scanner scnr) {
         scnr.nextLine();
         String input;
         String name;
@@ -35,7 +34,42 @@ public class CSC422SteinbachProject1 {
         
     }
     
-    static void printPets() {
+    static void searchName(ArrayList<Pet> pets, Scanner scnr) {
+        ArrayList<Pet> petsNames = new ArrayList<>();
+        String input;
+        System.out.println("Enter name to search");
+        input = scnr.next();
+        Pet current;
+        for(int i = 0; i < pets.size(); i++) {
+            current = pets.get(i);
+            if (current.getName().equalsIgnoreCase(input)) {
+                petsNames.add(current);
+            }
+        }
+        printPets(petsNames);
+    }
+    
+    static void searchAge(ArrayList<Pet> pets, Scanner scnr) {
+        try {
+            ArrayList<Pet> petsAges = new ArrayList<>();
+            int input;
+            System.out.println("Enter age to search");
+            input = scnr.nextInt();
+            Pet current;
+            for(int i = 0; i < pets.size(); i++) {
+                current = pets.get(i);
+                if (current.getAge() == input) {
+                    petsAges.add(current);
+                }
+            }
+            printPets(petsAges);
+        }
+        catch(InputMismatchException e) {
+            System.out.println(e);
+        }
+    }
+    
+    static void printPets(ArrayList<Pet> pets) {
         String line = "+----------------------+";
         System.out.println(line + "\n| ID | NAME      | AGE |\n" + line);
         int i = 0;
@@ -46,20 +80,25 @@ public class CSC422SteinbachProject1 {
     }
     
     public static void main(String[] args) {
+        ArrayList<Pet> pets = new ArrayList<>();
         Scanner scnr = new Scanner(System.in);
         int input = 0;
-        while (input != 3) {
+        while (input != 5) {
             System.out.println("""
                            Pet Database Program
                            1) View all pets
                            2) Add more Pet
-                           3) Exit
+                           3) Search pets by name
+                           4) Search pets by age
+                           5) Exit
                            """);
             try {
                 input = scnr.nextInt();
                 switch(input) {
-                    case(1) -> printPets();
-                    case(2) -> addPets(scnr);
+                    case(1) -> printPets(pets);
+                    case(2) -> addPets(pets, scnr);
+                    case(3) -> searchName(pets, scnr);
+                    case(4) -> searchAge(pets, scnr);
                 }
             }
             catch(InputMismatchException e) {
